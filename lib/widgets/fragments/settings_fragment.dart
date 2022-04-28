@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:mini_project/helpers/providers/auth_manager.dart';
 import 'package:mini_project/widgets/components/setting_tile.dart';
+import 'package:provider/provider.dart';
 
-class SettingsFragment extends StatelessWidget {
+class SettingsFragment extends StatefulWidget {
   const SettingsFragment({Key? key}) : super(key: key);
+
+  @override
+  State<SettingsFragment> createState() => _SettingsFragmentState();
+}
+
+class _SettingsFragmentState extends State<SettingsFragment> {
+  void handleLogout() async {
+    await Provider.of<AuthManager>(context, listen: false).revokeToken();
+    Navigator.pushNamed(context, '/');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +43,7 @@ class SettingsFragment extends StatelessWidget {
           SettingTile(
             text: "Logout",
             icon: Icons.logout_outlined,
-            onTap: () {},
+            onTap: handleLogout,
           ),
         ],
       ),

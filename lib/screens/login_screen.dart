@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mini_project/helpers/providers/auth_manager.dart';
 import 'package:mini_project/helpers/providers/form_manager.dart';
 import 'package:mini_project/helpers/validator.dart';
 import 'package:mini_project/model/auth_model.dart';
+import 'package:mini_project/services/services.dart';
 import 'package:mini_project/view_models/login_view_model.dart';
 import 'package:mini_project/widgets/auth_header.dart';
 import 'package:mini_project/widgets/form.dart';
@@ -37,9 +39,17 @@ class _LoginScreenState extends State<LoginScreen> {
       final LoginInput input = LoginInput(
           email: _formManager.getValueForField('email'),
           password: _formManager.getValueForField('password'));
-      final res = await Provider.of<LoginViewModel>(context, listen: false).login(input: input);
 
-      print(res.token);
+      final res = await Provider.of<LoginViewModel>(context, listen: false).login(input: input);
+      if (res.status == ApiStatus.success && res.data?.token != null) {
+        await Provider.of<AuthManager>(context, listen: false)
+            .setToken(token: res.data!.token as String);
+        Navigator.pushNamed(context, '/');
+      } else {
+        if (res.message != null) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res.message!)));
+        }
+      }
     }
   }
 

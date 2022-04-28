@@ -23,4 +23,9 @@ class LocalStorage {
     final res = await _sharedPreferences;
     await res?.setString(spKey, data);
   }
+
+  Future<void> remove({required String spKey}) async {
+    final res = await _sharedPreferences;
+    await res?.remove(spKey);
+  }
 }
