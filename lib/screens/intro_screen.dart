@@ -58,16 +58,18 @@ class _IntroScreenState extends State<IntroScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return IntroSlider(
-      slides: slides,
-      onDonePress: onDonePress,
-      nextButtonStyle: IntroScreenStyles.nextButton,
-      doneButtonStyle: IntroScreenStyles.nextButton,
-      colorDot: Colors.grey,
-      colorActiveDot: Colors.blue,
-      renderSkipBtn: Text(
-        "Skip",
-        style: IntroScreenStyles.skipText,
+    return Scaffold(
+      body: IntroSlider(
+        slides: slides,
+        onDonePress: onDonePress,
+        nextButtonStyle: IntroScreenStyles.nextButton,
+        doneButtonStyle: IntroScreenStyles.nextButton,
+        colorDot: Colors.grey,
+        colorActiveDot: Colors.blue,
+        renderSkipBtn: Text(
+          "Skip",
+          style: IntroScreenStyles.skipText,
+        ),
       ),
     );
   }
